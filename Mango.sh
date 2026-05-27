@@ -1,4 +1,4 @@
-cp mango.repo /etc/yum.repos.d/mongo.repo
+cp Mango.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-org -y
 
