@@ -7,6 +7,7 @@ cp Catalogue.service  /etc/systemd/system/catalogue.service
 cp Mango.repo /etc/yum.repos.d/mongo.repo
 
 useradd roboshop
+rm -rf /app
 mkdir /app
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
 cd /app
