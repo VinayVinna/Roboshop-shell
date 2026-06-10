@@ -1,25 +1,29 @@
-echo -e "\e[35mdisbale nginx\e[0m"
+print_head(){
+  echo -e "\e[35m$*\e[0m"
+}
+
+print_head  disbale nginx
 dnf module disable nginx -y
 
-echo -e "\e[35menable nginx 24\e[0m"
+print_head  enable nginx 24
 dnf module enable nginx:1.24 -y
 
-echo -e "\e[35minstall nginx\e[0m"
+print_head  install nginx
 dnf install nginx -y
 
-echo -e "\e[35mcopy nginx file\e[0m"
+print_head  copy nginx file
 cp nginx.conf  /etc/nginx/nginx.conf
 
-echo -e "\e[35mclean old content\e[0m"
+print_head  clean old content
 rm -rf /usr/share/nginx/html/*
 
-echo -e "\e[35mdownload app content\e[0m"
+print_head  download app content
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 cd /usr/share/nginx/html
 
-echo -e "\e[35mextract app content\e[0m"
+print_head  extract app content
 unzip /tmp/frontend.zip
 
-echo -e "\e[35mstart nginx services\e[0m"
+print_head  start nginx services
 systemctl enable nginx
 systemctl start nginx
