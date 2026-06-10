@@ -49,9 +49,9 @@ python_app_setup(){
 
 print_head(){
   echo -e "\e[35m$*\e[0m"
-  echo"############################"
+  echo"############################"  >> $log_file
   echo -e "\e[35m$*\e[0m" >> $log_file
-  echo"############################"
+  echo"############################"  >> $log_file
 }
 
 log_file=/tmp/roboshop.log
