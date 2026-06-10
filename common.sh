@@ -46,3 +46,13 @@ python_app_setup(){
   pip3 install -r requirements.txt
   systemd_setup
 }
+
+print_head(){
+  echo -e "\e[35m$*\e[0m"
+  echo"############################"
+  echo -e "\e[35m$*\e[0m" >> $log_file
+  echo"############################"
+}
+
+log_file=/tmp/roboshop.log
+rm -f $log_file
