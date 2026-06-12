@@ -1,56 +1,76 @@
 systemd_setup(){
-  systemctl daemon-reload
-  systemctl enable $component
-  systemctl restart $component
+  print_head copy system services
+  cp $component.service /etc/systemd/system/$component.service
+
+  print_head start service
+  systemctl daemon-reload &>> $log_file
+  systemctl enable $component &>> $log_file
+  systemctl restart $component &>> $log_file
 }
 
 artifact_download(){
-  rm -rf /app
-  mkdir /app
-  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component-v3.zip
+  print_head add application user
+  useradd roboshop &>> $log_file
+
+  print_head remove application existing content
+  rm -rf /app &>> $log_file
+
+  print_head create a directory
+  mkdir /app &>> $log_file
+
+  print_head download application content
+  curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component-v3.zip &>> $log_file
   cd /app
-  unzip /tmp/$component.zip
+
+  print_head extract application content
+  unzip /tmp/$component.zip &>> $log_file
 }
 
-app_prereq(){
-  useradd roboshop
-    cp $component.service /etc/systemd/system/$component.service
-}
 
 nodejs_app_setup(){
-dnf module disable nodejs -y
-dnf module enable nodejs:20 -y
-dnf install nodejs -y
-app_prereq
+print_head disable nodejs default
+dnf module disable nodejs -y &>> $log_file
+
+print_head enable nodejs 20
+dnf module enable nodejs:20 -y &>> $log_file
+
+print_head install node js
+dnf install nodejs -y &>> $log_file
 artifact_download
 cd /app
-npm install
+
+print_head install nodejs dependencies
+npm install &>> $log_file
 systemd_setup
 }
 
 maven_app_setup(){
-  dnf install maven -y
-  app_prereq
+  print_head install maven
+  dnf install maven -y &>> $log_file
   artifact_download
   cd /app
-  mvn clean package
+
+  print_head install maven dependencies
+  mvn clean package &>> $log_file
   mv target/$component-1.0.jar $component.jar
   systemd_setup
 }
 
 python_app_setup(){
-  dnf install python3 gcc python3-devel -y
-  app_prereq
+  print_hed install python
+  dnf install python3 gcc python3-devel -y &>> $log_file
   artifact_download
   cd /app
-  pip3 install -r requirements.txt
+
+  print_head python dependencies
+  pip3 install -r requirements.txt &>> $log_file
   systemd_setup
 }
 
 print_head(){
   echo -e "\e[35m$*\e[0m"
   echo"############################"  &>> $log_file
-  echo -e "\e[35m$*\e[0m" >> $log_file
+  echo -e "\e[35m$*\e[0m" &>> $log_file
   echo"############################"  &>> $log_file
 }
 

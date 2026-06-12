@@ -1,9 +1,17 @@
-cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+source common.sh
 
-dnf install rabbitmq-server -y
+print_head copy rabbitmq repo file
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>> $log_file
 
-systemctl enable rabbitmq-server
-systemctl restart rabbitmq-server
+print_head install rabbitmq server
+dnf install rabbitmq-server -y &>> $log_file
 
-rabbitmqctl add_user roboshop roboshop123
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+print_head start rabbitmq services
+systemctl enable rabbitmq-server &>> $log_file
+systemctl restart rabbitmq-server &>> $log_file
+
+print_add add root user
+rabbitmqctl add_user roboshop roboshop123 &>> $log_file
+
+print_head update the root user permissions
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $log_file
