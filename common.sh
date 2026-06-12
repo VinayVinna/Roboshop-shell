@@ -1,29 +1,36 @@
 systemd_setup(){
   print_head copy system services
   cp $component.service /etc/systemd/system/$component.service
+  echo $?
 
   print_head start service
   systemctl daemon-reload &>> $log_file
   systemctl enable $component &>> $log_file
   systemctl restart $component &>> $log_file
+  echo $?
 }
 
 artifact_download(){
   print_head add application user
   useradd roboshop &>> $log_file
+  echo $?
 
   print_head remove application existing content
   rm -rf /app &>> $log_file
+  echo $?
 
   print_head create a directory
   mkdir /app &>> $log_file
+  echo $?
 
   print_head download application content
   curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component-v3.zip &>> $log_file
+  echo $?
   cd /app
 
   print_head extract application content
   unzip /tmp/$component.zip &>> $log_file
+  echo $?
 }
 
 
