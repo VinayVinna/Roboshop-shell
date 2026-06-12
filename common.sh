@@ -12,6 +12,8 @@ systemd_setup(){
 
 artifact_download(){
   print_head add application user
+  id roboshop &>> $log_file
+  if [ $? -ne 0]; then
   useradd roboshop &>> $log_file
   exit_status_print $?
 
