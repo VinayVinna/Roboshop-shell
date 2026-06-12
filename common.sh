@@ -35,26 +35,25 @@ artifact_download(){
   exit_status_print $?
 }
 
-
 nodejs_app_setup(){
-print_head disable nodejs default
-dnf module disable nodejs -y &>> $log_file
-exit_status_print $?
+ print_head disable nodejs default
+ dnf module disable nodejs -y &>> $log_file
+ exit_status_print $?
 
-print_head enable nodejs 20
-dnf module enable nodejs:20 -y &>> $log_file
-exit_status_print $?
+ print_head enable nodejs 20
+ dnf module enable nodejs:20 -y &>> $log_file
+ exit_status_print $?
 
-print_head install node js
-dnf install nodejs -y &>> $log_file
-exit_status_print $?
-artifact_download
-cd /app
+ print_head install node js
+ dnf install nodejs -y &>> $log_file
+ exit_status_print $?
+ artifact_download
+ cd /app
 
-print_head install nodejs dependencies
-npm install &>> $log_file
-exit_status_print $?
-systemd_setup
+ print_head install nodejs dependencies
+ npm install &>> $log_file
+ exit_status_print $?
+ systemd_setup
 }
 
 maven_app_setup(){
@@ -70,7 +69,7 @@ maven_app_setup(){
 }
 
 python_app_setup(){
-  print_hed install python
+  print_head install python
   dnf install python3 gcc python3-devel -y &>> $log_file
   artifact_download
   cd /app
@@ -85,10 +84,10 @@ print_head(){
   echo"############################"  &>> $log_file
   echo -e "\e[35m$*\e[0m" &>> $log_file
   echo"############################"  &>> $log_file
-}
 
 log_file=/tmp/roboshop.log
 rm -f $log_file
+}
 
 exit_status_print(){
 if [ $1 -eq 0 ]; then
