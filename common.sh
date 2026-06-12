@@ -15,6 +15,7 @@ artifact_download(){
   id roboshop &>> $log_file
   if [ $? -ne 0]; then
   useradd roboshop &>> $log_file
+  fi
   exit_status_print $?
 
   print_head remove application existing content
