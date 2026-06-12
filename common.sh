@@ -86,9 +86,11 @@ print_head(){
   echo -e "\e[35m$*\e[0m" &>> $log_file
   echo"############################"  &>> $log_file
 
+}
+
 log_file=/tmp/roboshop.log
 rm -f $log_file
-}
+
 
 exit_status_print(){
 if [ $1 -eq 0 ]; then
