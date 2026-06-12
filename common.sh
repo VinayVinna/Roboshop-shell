@@ -37,17 +37,21 @@ artifact_download(){
 nodejs_app_setup(){
 print_head disable nodejs default
 dnf module disable nodejs -y &>> $log_file
+echo $?
 
 print_head enable nodejs 20
 dnf module enable nodejs:20 -y &>> $log_file
+echo $?
 
 print_head install node js
 dnf install nodejs -y &>> $log_file
+echo $?
 artifact_download
 cd /app
 
 print_head install nodejs dependencies
 npm install &>> $log_file
+echo $?
 systemd_setup
 }
 
