@@ -1,6 +1,6 @@
 systemd_setup(){
   print_head copy system services
-  cp $component.service /etc/systemd/system/$component.service
+  cp $pwd/$component.service /etc/systemd/system/$component.service
   exit_status_print $?
 
   print_head start service
@@ -98,3 +98,5 @@ else
   exit 1
 fi
 }
+
+pwd=$(pwd)
