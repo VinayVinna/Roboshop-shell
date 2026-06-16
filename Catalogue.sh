@@ -12,5 +12,5 @@ dnf install mongodb-mongosh -y &>>$log_file
 exit_status_print $?
 
 print_head load mangodb master data
-mongosh --host mango-dev.vdevops21.online </app/db/master-data.js &>>$log_file
+mongosh --host mangodb.vdevops21.online </app/db/master-data.js &>>$log_file
 exit_status_print $?
